@@ -36,22 +36,19 @@ for _ in xrange(MAX_TAGS):
     cursor.execute(tag_sql_str, (generate_tag(7), ))
     mariadb_connection.commit()
 
-# select tags ids
-cursor.execute('SELECT id FROM tag')
-tags_ids = [t[0] for t in cursor.fetchall()]
+# select tags names
+cursor.execute('SELECT name FROM tag')
+tag_names = [t[0] for t in cursor.fetchall()]
 
-# while inserting photos fill the tagmap
 for _ in xrange(MAX_PHOTOS):
-    photo_sql_str = ("INSERT INTO photo (user_id, src, created_at, likes) " +
-                     "VALUES (%s, %s, %s, %s)")
+    photo_sql_str = (
+        "INSERT INTO photo (user_id, src, created_at, likes, tags) " +
+        "VALUES (%s, %s, %s, %s, %s)")
+
+    tag_str = ','.join(random.sample(tag_names, 5))
     cursor.execute(photo_sql_str, (random.randint(1, MAX_USERS),
                                    random.choice(photo_urls),
                                    random_date(START_DATE, END_DATE),
-                                   random.randint(1, 111)))
+                                   random.randint(1, 111),
+                                   tag_str))
     mariadb_connection.commit()
-    photo_id = cursor.lastrowid
-
-    for tag_id in random.sample(tags_ids, 5):
-        cursor.execute("INSERT INTO tagmap (photo_id, tag_id) VALUES (%s, %s)",
-                       (photo_id, tag_id))
-        mariadb_connection.commit()

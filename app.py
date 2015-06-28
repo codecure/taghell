@@ -37,7 +37,8 @@ def photo_listing(page):
     if sort_direction not in [None, 'asc', 'desc']:
         abort(404)
 
-    photos = pagination.get_photos(page, tags, sort, sort_direction)
+    photos = pagination.get_photos(tags, page, sort, sort_direction)
+
     pagination_result = dict(
         items=[],
         has_prev=page > 1,
@@ -65,7 +66,7 @@ def photo_listing(page):
 @app.route('/tags')
 @cache.cached(timeout=50)
 def tags_list():
-    return json.dumps(pagination.tags_list())
+    return json.dumps([t[0] for t in pagination.tags_list()])
 
 
 if __name__ == '__main__':

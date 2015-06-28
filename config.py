@@ -3,28 +3,23 @@
 PER_PAGE = 20
 
 COUNT_QUERY = """
-    SELECT COUNT(1)
-    FROM (
-        SELECT p.id
-        FROM tagmap tm, photo p, tag t
-        WHERE tm.tag_id = t.id
-        AND (t.name in (%s))
-        AND p.id = tm.photo_id
-        GROUP BY p.id
-        HAVING COUNT( t.id ) = %s) as tmp;"""
+    select count(1)
+    from (
+        select id
+        from photo
+        where %s
+    ) as tmp
+"""
+
+MATCH_TAG = "match (tags) against ('%s')"
+NOT_MATCH_TAG = "not match (tags) against ('%s')"
 
 SELECT_QUERY = """
-    SELECT p.src, p.created_at, p.likes,
-        GROUP_CONCAT(t.name ORDER BY t.name SEPARATOR ', ') AS tags
-    FROM tagmap tm, photo p, tag t
-    WHERE tm.tag_id = t.id
-    AND (t.name in (%s))
-    AND t.off <> 1
-    AND p.id = tm.photo_id
-    GROUP BY p.id
-    HAVING COUNT( t.id ) = %s
+    select src, created_at, likes, tags
+    from photo
+    where %s
     %s
-    LIMIT %s OFFSET %s;""" % ('%s', '%s', '%s', PER_PAGE, '%s')
+    limit %s offset %s
+"""
 
-# ORDER BY p.created_at DESC
-TAGS_QUERY = "SELECT name FROM tag;"
+TAGS_QUERY = "SELECT name, off FROM tag;"

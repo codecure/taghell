@@ -3,16 +3,16 @@
 
 # Дамп таблицы photo
 # ------------------------------------------------------------
-
 CREATE TABLE `photo` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
   `src` text,
   `created_at` datetime DEFAULT NULL,
   `likes` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
+  `tags` text,
+  PRIMARY KEY (`id`),
+  FULLTEXT KEY `tags` (`tags`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 # Дамп таблицы tag
@@ -25,17 +25,4 @@ CREATE TABLE `tag` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   KEY `off` (`off`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-
-
-# Дамп таблицы tagmap
-# ------------------------------------------------------------
-
-CREATE TABLE `tagmap` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `photo_id` int(11) DEFAULT NULL,
-  `tag_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `tag_id` (`tag_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
