@@ -1,4 +1,7 @@
 # coding: utf-8
+DB_NAME = 'taghell'
+DB_USER = 'root'
+DB_PASSWORD = ''
 
 PER_PAGE = 20
 
@@ -23,3 +26,8 @@ SELECT_QUERY = """
 """
 
 TAGS_QUERY = "SELECT name, off FROM tag;"
+
+try:
+    from config_local import *
+except ImportError:
+        pass

@@ -3,13 +3,14 @@ from math import ceil
 import mysql.connector as mariadb
 
 from config import (PER_PAGE, COUNT_QUERY, SELECT_QUERY,
-                    TAGS_QUERY, MATCH_TAG, NOT_MATCH_TAG)
+                    TAGS_QUERY, MATCH_TAG, NOT_MATCH_TAG,
+                    DB_NAME, DB_USER, DB_PASSWORD)
 
 
 class Pagination(object):
     def __init__(self):
-        self.db_conn = mariadb.connect(user='root', password='',
-                                       database='taghell')
+        self.db_conn = mariadb.connect(user=DB_USER, password=DB_PASSWORD,
+                                       database=DB_NAME)
         self.cursor = self.db_conn.cursor(buffered=True)
 
     def build_query_where(self, tags_list):

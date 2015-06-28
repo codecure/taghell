@@ -3,9 +3,10 @@
 ## Установка
     $ virtualenv taghell
     $ . taghell/bin/activate
-    $ pip install -r requirements.txt
+    $ pip install -r requirements.txt --allow-external mysql-connector-python
     $ mysql -uUSER -hHOST -p -e 'CREATE DATABASE `taghell` CHARACTER SET utf8 COLLATE utf8_general_ci;'
     $ mysql -uUSER -hHOST -p taghell < taghell.sql
+    $ echo -e "DB_USER='your_db_user'\nDB_PASSWORD='your_db_password'\n" > config_local.py
     $ python fill_db.py  # Займет продолжительное время
 
 
