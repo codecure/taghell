@@ -5,7 +5,7 @@ from datetime import timedelta, datetime
 
 import mysql.connector as mariadb
 
-from config import DB_USER, DB_PASSWORD, DB_NAME
+from config import DB_USER, DB_PASSWORD, DB_NAME, DB_HOST
 
 MAX_PHOTOS = 10 ** 6
 MAX_USERS = 10 ** 4
@@ -15,7 +15,7 @@ START_DATE = datetime.now()
 END_DATE = START_DATE + timedelta(days=365)
 
 mariadb_connection = mariadb.connect(user=DB_USER, password=DB_PASSWORD,
-                                     database=DB_NAME)
+                                     database=DB_NAME, host=DB_HOST)
 cursor = mariadb_connection.cursor()
 
 photo_urls = []

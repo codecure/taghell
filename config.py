@@ -2,6 +2,7 @@
 DB_NAME = 'taghell'
 DB_USER = 'root'
 DB_PASSWORD = ''
+DB_HOST = 'localhost'
 
 PER_PAGE = 20
 
